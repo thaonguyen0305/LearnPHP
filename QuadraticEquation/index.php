@@ -1,25 +1,72 @@
 <?php
+class QuadraticEquation {
+    private $a;
+    private $b;
+    private $c;
+
+    public function __construct($a, $b, $c) {
+        $this->a = $a;
+        $this->b = $b;
+        $this->c = $c;
+    }
+
+    public function getA() {
+        return $this->a;
+    }
+
+    public function getB() {
+        return $this->b;
+    }
+
+    public function getC() {
+        return $this->c;
+    }
+
+    public function getDiscriminant() {
+        return ($this->b * $this->b) - (4 * $this->a * $this->c);
+    }
+
+    public function getRoot1() {
+        $delta = $this->getDiscriminant();
+        if ($delta >= 0) {
+            return (-$this->b + sqrt($delta)) / (2 * $this->a);
+        } else {
+            return 0; // Trả về 0 khi delta < 0
+        }
+    }
+
+    public function getRoot2() {
+        $delta = $this->getDiscriminant();
+        if ($delta >= 0) {
+            return (-$this->b - sqrt($delta)) / (2 * $this->a);
+        } else {
+            return 0; // Trả về 0 khi delta < 0
+        }
+    }
+}
+
+$result = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Lấy giá trị a, b và c từ biểu mẫu HTML
     $a = floatval($_POST["a"]);
     $b = floatval($_POST["b"]);
     $c = floatval($_POST["c"]);
-    // Tính delta
-    $delta = ($b * $b) - (4 * $a * $c);
-    // Tính các nghiệm
+
+    $equation = new QuadraticEquation($a, $b, $c);
+
+    $delta = $equation->getDiscriminant();
+
     if ($delta > 0) {
-        $x1 = (-$b + sqrt($delta)) / (2 * $a);
-        $x2 = (-$b - sqrt($delta)) / (2 * $a);
-        echo "Phương trình có 2 nghiệm:<br>";
-        echo "Nghiệm 1: $x1<br>";
-        echo "Nghiệm 2: $x2<br>";
-    } else if ($delta == 0) {
-        $x = -$b / (2 * $a);
-        echo "Phương trình có một nghiệm kép: $x<br>";
+        $x1 = $equation->getRoot1();
+        $x2 = $equation->getRoot2();
+        $result = "Phương trình có 2 nghiệm:<br>Nghiệm 1: $x1<br>Nghiệm 2: $x2<br>";
+    } elseif ($delta == 0 && $a != 0) {
+        $x = $equation->getRoot1();
+        $result = "Phương trình có một nghiệm kép: $x<br>";
     } elseif ($a == 0) {
-        echo "Phương trình không phải là phương trình bậc hai.<br>";
+        $result = "Phương trình không phải là phương trình bậc hai.<br>";
     } else {
-        echo "Phương trình vô nghiệm.<br>";
+        $result = "Phương trình vô nghiệm.<br>";
     }
 }
 ?>
@@ -32,9 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <h1>Giải phương trình bậc hai</h1>
     <form method="post" action="">
-        <input type="text" name="a" placeholder="a"> x^2 + <input type="text" name="b" placeholder="b"> x + <input type="text" name="c" placeholder="c"> = 0 <br><br>
+        <input type="text" name="a" placeholder="a">x^2 + <input type="text" name="b" placeholder="b">x + <input type="text" name="c" placeholder="c"> = 0 <br><br>
         <input type="submit" value="Kết quả">
     </form>
-</body>
 
+    <?php echo $result; ?>
+</body>
 </html>
