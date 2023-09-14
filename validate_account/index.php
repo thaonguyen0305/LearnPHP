@@ -7,26 +7,27 @@
 </head>
 <body>
     <form method="post">
-        Nhập email: <input type="text" name="email">
+        Nhập tên đăng nhập: <input type="text" name="account">
         <input type="submit" name="submit" value="Kiểm tra">
     </form>
 </body>
 </html>
 
 <?php
-function ValidateEmail($email) {  
-    if (preg_match('/^[A-Za-z0-9]+[A-Za-z0-9]*@[A-Za-z0-9]+(\.[A-Za-z0-9]+)+$/', $email)) {
+function ValidateAccount($account) {
+    if (preg_match('/^[_a-z0-9]{6,}$/', $account)) {
         return true; 
     } else {
         return false; 
     }
 }
+
 if (isset($_POST['submit'])) {
-    $checkEmail = $_POST['email'];
-    if (ValidateEmail($checkEmail)) {
-        echo "$checkEmail là một địa chỉ email hợp lệ.";
+    $checkAccount = $_POST['account'];
+    if (ValidateAccount($checkAccount)) {
+        echo "$checkAccount tên đăng nhập hợp lệ.";
     } else {
-        echo "$checkEmail không phải là địa chỉ email hợp lệ.";
+        echo "$checkAccount tên đăng nhập không hợp lệ.";
     }
 }
 ?>
