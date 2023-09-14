@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login page</title>
 </head>
 <body>
     <form action ="" method = 'post'>
@@ -35,6 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
     </form>  
-    <p>Creat your Account? <a href="regisster.php">Creat</p>  
+    <p>Create your Account? <a href="register.php">Create</p>  
 </body>
 </html>
